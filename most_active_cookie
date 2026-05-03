@@ -1,0 +1,34 @@
+#!/usr/bin/env python3
+
+import argparse 
+import sys 
+from cookie_finder import find_most_active_cookies
+
+def main():
+    parser = argparse.ArgumentParser(description="Find the most active cookie(s) for a given date")
+    parser.add_argument('filename', help="file path to csv file containing cookie log")
+    parser.add_argument('-d', required=True, help="input desired date in yyyy-mm-dd format")
+    args = parser.parse_args()
+
+    #argument handling, date and cookie entries
+    
+    try:
+        with open(args.filename, "r") as f:
+            cookie_rows = f.readlines()
+        
+    except FileNotFoundError: 
+        print(f"Error: File '{args.filename}' is not found", filename=sys.stderr)
+        sys.exit(1)
+    
+    #call cookie_finder with date, cookie_rows for most active cookie finding 
+    results = find_most_active_cookies(args.d, cookie_rows)
+    for cookie in results: 
+        print(cookie)
+
+
+    
+    
+
+
+if __name__ == "__main__":
+    main()
