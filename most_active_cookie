@@ -17,7 +17,7 @@ def main():
             cookie_rows = f.readlines()
         
     except FileNotFoundError: 
-        print(f"Error: File '{args.filename}' is not found", filename=sys.stderr)
+        print(f"Error: File '{args.filename}' is not found", file=sys.stderr)
         sys.exit(1)
     
     #call cookie_finder with date, cookie_rows for most active cookie finding 
