@@ -53,3 +53,7 @@ Located in test_cookie.py, designed to for testing most_active_cookie in three l
 2. Used `defaultdict(int)` for efficient frequency counting
 3. Date filtering is performed during file iteration to avoid unnecessary intermediate storage
 4. Error handling was added for invalid file paths and malformed input rows
+
+## Scalability For Future
+1. Consider using generator function to parse inputs instead of loading CSV all at once if input file is very large 
+2. 

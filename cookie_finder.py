@@ -1,8 +1,11 @@
+from __future__ import annotations
+
 import csv
 from collections import defaultdict
+from collections.abc import Iterable
 
 
-def parse_cookie_log(filepath):
+def parse_cookie_log(filepath: str) -> list[tuple[str, str]]:
     """
     Parses a cookie log CSV into (cookie, date) tuples.
     Expects a header row (cookie,timestamp) followed by data rows.
@@ -22,7 +25,7 @@ def parse_cookie_log(filepath):
     return entries
 
 
-def find_most_active_cookies(target_date, entries):
+def find_most_active_cookies(target_date: str, entries: Iterable[tuple[str, str]]) -> list[str]:
     """
     entries: iterable of (cookie, date_str) tuples, date_str as "YYYY-MM-DD"
     Returns list of cookies with the highest occurrence count on target_date.
