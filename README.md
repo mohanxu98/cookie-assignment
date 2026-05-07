@@ -12,23 +12,23 @@ cookie-assignment/
 └── requirements.txt        # Dependencies
 ```
 
-### `cookie_finder.py`
-- **`parse_cookie_log(filepath)`** — reads a CSV file, skips the header row, returns a list of `(cookie, date_str)` tuples where `date_str` is `YYYY-MM-DD`
-- **`find_most_active_cookies(target_date, entries)`** — takes an iterable of `(cookie, date_str)` tuples and a target date string, returns a list of all cookies tied for the highest count on that date (empty list if no matches)
+### cookie_finder.py
+- parse_cookie_log(filepath) — reads a CSV file, skips the header row, returns a list of (cookie, date_str) tuples where date_str is YYYY-MM-DD
+- find_most_active_cookies(target_date, entries) — takes an iterable of (cookie, date_str) tuples and a target date string, returns a list of all cookies tied for the highest count on that date (empty list if no matches)
 
-### `most_active_cookie`
-CLI entry point. Parses arguments, calls `parse_cookie_log` and `find_most_active_cookies` core logic functions, prints one cookie per line to stdout.
+### most_active_cookie
+CLI entry point. Parses arguments, calls parse_cookie_log and find_most_active_cookies, prints one cookie per line to stdout.
 
 **Usage:**
 ```
 ./most_active_cookie <path_to_csv> -d <YYYY-MM-DD>
 ```
 
-**Input:** CSV file with a `cookie,timestamp` header followed by rows of `<cookie_id>,<ISO8601 timestamp>`
+**Input:** CSV file with a cookie,timestamp header followed by rows of cookie_id,ISO8601 timestamp
 
 **Output:** One cookie ID per line (all cookies tied for most active on the given date). Empty output if no cookies found for that date.
 
-**Exit codes:** `0` on success, `1` if the file is not found
+**Exit codes:** 0 on success, 1 if the file is not found
 
 **Example:**
 ```
@@ -38,7 +38,7 @@ AtY0laUfhglK3lC7
 
 
 
-## Testing architecture 
+## Testing Architecture 
 Located in test_cookie.py, designed to for testing most_active_cookie in three layers:
 1. Basic logic handling: tests function logic for most active cookies (calls find most_active_cookies within most_active_cookie.py) with well formatted, pre-set inputs
 
@@ -50,10 +50,11 @@ Located in test_cookie.py, designed to for testing most_active_cookie in three l
 ## Design Choices / Implementation Notes
 
 1. Core cookie aggregation logic is separated from CLI handling to improve testability and maintainability
-2. Used `defaultdict(int)` for efficient frequency counting
+2. Used defaultdict(int) for efficient frequency counting
 3. Date filtering is performed during file iteration to avoid unnecessary intermediate storage
 4. Error handling was added for invalid file paths and malformed input rows
 
-## Scalability For Future
-1. Consider using generator function to parse inputs instead of loading CSV all at once if input file is very large 
-2. 
+## Scalability / Future Considerations
+1. parse_cookie_log loads the full file into memory — for very large logs, the parsing layer could be swapped for a streaming/generator approach without changing find_most_active_cookies
+2. find_most_active_cookies accepts any iterable, so the data source (CSV, database, API) can be swapped out without touching the core logic
+3. Currently supports a single date query per run — the architecture supports multiple queries against the same parsed entries without re-reading the file
