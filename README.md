@@ -57,4 +57,4 @@ Located in test_cookie.py, designed to for testing most_active_cookie in three l
 ## Scalability / Future Considerations
 1. parse_cookie_log loads the full file into memory — for very large logs, the parsing layer could be swapped for a streaming/generator approach without changing find_most_active_cookies
 2. find_most_active_cookies accepts any iterable, so the data source (CSV, database, API) can be swapped out without touching the core logic
-3. Currently supports a single date query per run — the architecture supports multiple queries against the same parsed entries without re-reading the file
+4. The parsing layer can be extended to support additional input formats beyond CSV in future if needed
