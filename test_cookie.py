@@ -189,7 +189,7 @@ class TestCLIIntegration:
 
     def _run(self, *args):
         return subprocess.run(
-            ["python3", CLI, *args],
+            [CLI, *args],
             capture_output=True, text=True, cwd=PROJECT_DIR,
         )
 
