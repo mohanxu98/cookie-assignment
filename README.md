@@ -2,7 +2,39 @@
 Take Home Assessment 
 
 ## File Structure
-TO BE ADDED 
+
+```
+cookie-assignment/
+├── most_active_cookie      # CLI entry point
+├── cookie_finder.py        # Core logic: parse_cookie_log, find_most_active_cookies
+├── test_cookie.py          # Test suite (pytest)
+├── cookie_log.csv          # Sample input file
+└── requirements.txt        # Dependencies
+```
+
+### `cookie_finder.py`
+- **`parse_cookie_log(filepath)`** — reads a CSV file, skips the header row, returns a list of `(cookie, date_str)` tuples where `date_str` is `YYYY-MM-DD`
+- **`find_most_active_cookies(target_date, entries)`** — takes an iterable of `(cookie, date_str)` tuples and a target date string, returns a list of all cookies tied for the highest count on that date (empty list if no matches)
+
+### `most_active_cookie`
+CLI entry point. Parses arguments, calls `parse_cookie_log` and `find_most_active_cookies`, prints one cookie per line to stdout.
+
+**Usage:**
+```
+python3 most_active_cookie <path_to_csv> -d <YYYY-MM-DD>
+```
+
+**Input:** CSV file with a `cookie,timestamp` header followed by rows of `<cookie_id>,<ISO8601 timestamp>`
+
+**Output:** One cookie ID per line (all cookies tied for most active on the given date). Empty output if no cookies found for that date.
+
+**Exit codes:** `0` on success, `1` if the file is not found
+
+**Example:**
+```
+$ python3 most_active_cookie cookie_log.csv -d 2018-12-09
+AtY0laUfhglK3lC7
+```
 
 
 
