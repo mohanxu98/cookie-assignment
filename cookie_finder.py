@@ -14,6 +14,8 @@ def parse_cookie_log(filepath: str) -> list[tuple[str, str]]:
     entries = []
     with open(filepath, newline="") as f:
         reader = csv.reader(f)
+        if not reader:
+            raise ValueError("CSV file is empty")
         next(reader)  # skip header
         for lineno, row in enumerate(reader, start=2):
             if not row:
