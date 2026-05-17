@@ -18,7 +18,6 @@ def parse_cookie_log(filepath: str) -> list[tuple[str, str]]:
             next(reader)
         except StopIteration:
             return []
-        next(reader)  # skip header
         for lineno, row in enumerate(reader, start=2):
             if not row:
                 continue

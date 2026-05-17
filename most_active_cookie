@@ -3,6 +3,7 @@
 import argparse
 import sys
 from cookie_finder import parse_cookie_log, find_most_active_cookies
+from datetime import datetime 
 
 
 def main():
@@ -15,6 +16,13 @@ def main():
         entries = parse_cookie_log(args.filename)
     except FileNotFoundError:
         print(f"Error: File '{args.filename}' is not found", file=sys.stderr)
+        sys.exit(1)
+    try:
+        parsed = datetime.strptime(args.d, "%Y-%m-%d")
+        if parsed.strftime("%Y-%m-%d") != args.d:
+            raise ValueError
+    except ValueError:
+        print(f"Error: Date '{args.d}' must be in YYYY-MM-DD format", file=sys.stderr)
         sys.exit(1)
 
     for cookie in find_most_active_cookies(args.d, entries):
